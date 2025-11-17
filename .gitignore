@@ -11,7 +11,7 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-
+deploy
 # OS
 .DS_Store
 
@@ -27,6 +27,8 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+/deploy
+
 
 # IDE - VSCode
 .vscode/*
@@ -46,6 +48,7 @@ lerna-debug.log*
 .temp
 .tmp
 
+../deploy
 # Runtime data
 pids
 *.pid

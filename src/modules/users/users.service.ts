@@ -1,19 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { user } from './entities/user.entity';
+import { CreateUserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
-  private db: Low<any>;
-  constructor() {
-    const adapter = new JSONFile('commob/db/db.json');
-    this.db = new Low(adapter, { users: [] });
+  constructor(
+    @InjectRepository(user)
+    private readonly userRepository: Repository<user>
+  ) {}
+
+  async findAllUsers(){
+    return await this.userRepository.find();
   }
-  async finAll() {
-    await this.db.read();
-    return this.db.data.users;
-  }
-  newUser() {
-   
+
+  async create(dto: CreateUserDto) {
+    const usuario = this.userRepository.create(dto);
+    return await this.userRepository.save(usuario);
   }
 }
