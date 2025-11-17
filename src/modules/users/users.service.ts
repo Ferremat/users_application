@@ -13,16 +13,7 @@ export class UsersService {
     await this.db.read();
     return this.db.data.users;
   }
-  new() {
-    this.db.read();
-    const user = {
-      id: this.db.data.users.length + 1,
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      password: 'XXXXXXXXXXX',
-    };
-    this.db.data.users.push(user);
-    this.db.write();
-    return user;
+  newUser() {
+   
   }
 }
