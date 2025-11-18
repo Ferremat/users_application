@@ -1,32 +1,25 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Optional } from "@nestjs/common";
-
-//create table usuario (id ....)
-//LOGICA DE NEGOCIO DE LA ENTIDAD USUARIO. Hola
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('usuario')
-export class Usuario {
+export class user {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @Column({ nullable: true, length: 30 })
+  name: string;
 
-    @Column({ nullable:true,  length: 30})
-    name: string;
+  @Column({ type: 'varchar', length: 32 }) // <- aquí
+  password: string;
 
-    @Column('string', {default: 18})
-    password: number;
-    
-    @Column({nullable: false, unique: true})
-    email: string;
-    
-    @Column({nullable: false, unique: true})
-    username: string;
+  @Column({ nullable: false, unique: true, length: 100 })
+  email: string;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+  @Column({ nullable: false, unique: true, length: 20 })
+  username: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-
+  @CreateDateColumn()
+  createdAt: Date;
 }
