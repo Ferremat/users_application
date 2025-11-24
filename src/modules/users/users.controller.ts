@@ -2,20 +2,23 @@ import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices'; 
-// Ya no necesitamos @Inject ni ClientProxy aquí
+// users_application/src/modules/users/users.controller.ts
 
-// Se usa solo para agrupar manejadores, el valor no importa en TCP
 @Controller() 
 export class UsersController {
   
-    // 1. CORRECCIÓN: Inyectar el servicio LOCAL (UsersService)
     constructor(private readonly usersService: UsersService) {}
 
-    // 2. CORRECCIÓN: Agregar el método MessagePattern para recibir el mensaje del Gateway
+    // MANEJADOR PARA EL MENSAJE 'create_user' (ya lo tenías)
     @MessagePattern({ cmd: 'create_user' })
     create(@Payload() createUserDto: CreateUserDto) {
-        console.log('✅ Mensaje TCP recibido. Procediendo a guardar en la VPS...');
-        // Llama al servicio para ejecutar TypeORM y guardar en la base de datos remota
+        console.log('✅ Mensaje TCP recibido. Procediendo a guardar...');
         return this.usersService.create(createUserDto);
     }
+
+    @MessagePattern({ cmd: 'test_connection' })
+    handleTestConnection(@Payload() data: string) {
+        console.log('✅✅✅ Microservicio (3001): ¡Mensaje de prueba TCP recibido con éxito!');
+        return `Respuesta desde 3001: ${data}. ¡Conexión establecida!`;
+    }
 }
