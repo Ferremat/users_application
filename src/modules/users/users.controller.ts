@@ -1,17 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices'; 
+// Ya no necesitamos @Inject ni ClientProxy aquí
 
-@Controller('users')
+// Se usa solo para agrupar manejadores, el valor no importa en TCP
+@Controller() 
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-  @Get('/listar')
-  getUsers() {
-    return this.usersService.findAllUsers();
-  }
+  
+    // 1. CORRECCIÓN: Inyectar el servicio LOCAL (UsersService)
+    constructor(private readonly usersService: UsersService) {}
 
-  @Post('/crear')
-  createUser(@Body() dto: CreateUserDto) {
-    return this.usersService.create(dto);
-  }
+    // 2. CORRECCIÓN: Agregar el método MessagePattern para recibir el mensaje del Gateway
+    @MessagePattern({ cmd: 'create_user' })
+    create(@Payload() createUserDto: CreateUserDto) {
+        console.log('✅ Mensaje TCP recibido. Procediendo a guardar en la VPS...');
+        // Llama al servicio para ejecutar TypeORM y guardar en la base de datos remota
+        return this.usersService.create(createUserDto);
+    }
 }
