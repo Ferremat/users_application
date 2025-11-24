@@ -8,17 +8,13 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 export class UsersController {
   
     constructor(private readonly usersService: UsersService) {}
-
-    // MANEJADOR PARA EL MENSAJE 'create_user' (ya lo tenías)
     @MessagePattern({ cmd: 'create_user' })
     create(@Payload() createUserDto: CreateUserDto) {
-        console.log('✅ Mensaje TCP recibido. Procediendo a guardar...');
         return this.usersService.create(createUserDto);
     }
 
     @MessagePattern({ cmd: 'test_connection' })
     handleTestConnection(@Payload() data: string) {
-        console.log('✅✅✅ Microservicio (3001): ¡Mensaje de prueba TCP recibido con éxito!');
-        return `Respuesta desde 3001: ${data}. ¡Conexión establecida!`;
+        return `${data}.  Funciona`;
     }
 }
