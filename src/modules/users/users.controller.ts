@@ -8,10 +8,11 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 export class UsersController {
   
     constructor(private readonly usersService: UsersService) {}
-    @MessagePattern({ cmd: 'create_user' })
-    create(@Payload() createUserDto: CreateUserDto) {
-        return this.usersService.create(createUserDto);
-    }
+    @MessagePattern({ cmd: 'create_user' })
+        create(@Payload() payload: string) {
+            const createUserDto = JSON.parse(payload); 
+            return this.usersService.create(createUserDto);
+        }
 
     @MessagePattern({ cmd: 'test_connection' })
     handleTestConnection(@Payload() data: string) {

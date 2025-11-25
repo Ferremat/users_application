@@ -31,7 +31,4 @@ import { UsersModule } from './modules/users/users.module'; // <-- importar mód
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  // Ya no necesitas inyectar configService en el constructor
-  // constructor(private readonly configService: ConfigService) {}
-}
+export class AppModule {}

@@ -26,7 +26,6 @@ import { envs } from 'src/config';
   // 3. PROVEEDORES (SERVICIOS)
   providers: [UsersService],
   
-  // 4. EXPORTAR (Opcional, si otros módulos lo necesitan)
   exports: [
     TypeOrmModule, 
     UsersService
