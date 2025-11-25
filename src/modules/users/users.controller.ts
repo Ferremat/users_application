@@ -15,6 +15,6 @@ export class UsersController {
 
     @MessagePattern({ cmd: 'test_connection' })
     handleTestConnection(@Payload() data: string) {
-        return `${data}.  Funciona`;
+        return `${data}.  FuncionAAAAAAAAa`;
     }
 }

@@ -16,8 +16,8 @@ import { envs } from 'src/config';
         name: 'MSERVICE_USERS',
         transport: Transport.TCP,
         options: {
-            host: envs.MS_USERS_HOST, 
-            port: envs.MS_USERS_PORT,
+            host: envs.DATABASE_URL, 
+            port: envs.PORT,
         },
       },
     ]),
