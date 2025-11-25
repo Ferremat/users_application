@@ -1,17 +1,20 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices'; 
+// users_application/src/modules/users/users.controller.ts
 
-@Controller('users')
+@Controller() 
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-  @Get('/listar')
-  getUsers() {
-    return this.usersService.findAllUsers();
-  }
+  
+    constructor(private readonly usersService: UsersService) {}
+    @MessagePattern({ cmd: 'create_user' })
+    create(@Payload() createUserDto: CreateUserDto) {
+        return this.usersService.create(createUserDto);
+    }
 
-  @Post('/crear')
-  createUser(@Body() dto: CreateUserDto) {
-    return this.usersService.create(dto);
-  }
+    @MessagePattern({ cmd: 'test_connection' })
+    handleTestConnection(@Payload() data: string) {
+        return `${data}.  FuncionAAAAAAAAa`;
+    }
 }
