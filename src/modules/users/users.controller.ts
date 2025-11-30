@@ -14,8 +14,8 @@ export class UsersController {
             return this.usersService.create(createUserDto);
         }
 
-    @MessagePattern({ cmd: 'test_connection' })
-    handleTestConnection(@Payload() data: string) {
-        return `${data}.  FuncionAAAAAAAAa`;
-    }
+    @MessagePattern({ cmd: 'listar_usuarios'}) 
+    async findAll(){
+        return this.usersService.findAllUsers();
+    }
 }
